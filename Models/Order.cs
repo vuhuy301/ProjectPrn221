@@ -18,6 +18,8 @@ namespace ProjectPRN221.Models
         public string? PaymentMethod { get; set; }
         public string? Notes { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public string? Name { get; set; }
+        public string? Phone { get; set; }
 
         public virtual User? User { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
