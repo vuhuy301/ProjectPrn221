@@ -25,17 +25,17 @@ namespace ProjectPRN221.Models
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var conf = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			if (!optionsBuilder.IsConfigured)
+			{
+				var conf = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer(conf.GetConnectionString("DbContext"));
-            }
-        }
+				optionsBuilder.UseSqlServer(conf.GetConnectionString("DbContext"));
+			}
+		}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Banner>(entity =>
             {
@@ -63,11 +63,17 @@ namespace ProjectPRN221.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.Name).HasMaxLength(50);
+
                 entity.Property(e => e.Notes).HasMaxLength(255);
 
                 entity.Property(e => e.OrderStatus).HasMaxLength(50);
 
                 entity.Property(e => e.PaymentMethod).HasMaxLength(50);
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
 
                 entity.Property(e => e.ShippingAddress).HasMaxLength(255);
 
