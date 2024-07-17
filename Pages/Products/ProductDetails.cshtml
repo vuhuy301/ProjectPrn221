@@ -1,0 +1,126 @@
+﻿@page
+@model ProjectPRN221.Pages.Products.ProductDetailsModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .addtocart {
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(97, 69, 223);
+        color: aliceblue;
+        height: 40px;
+        width: 200px;
+    }
+
+    .addtocart:hover {
+            background-color: rgb(66, 38, 168);
+            cursor: pointer;
+    }
+
+    h2 {
+        color: rgb(112, 41, 227);
+        padding-bottom: 15px;
+        display: inline;
+        border-bottom: 2px solid gray;
+    }
+
+    .price {
+        margin-top: 40px;
+        color: red !important;
+    }
+
+    img {
+        width: 450px;
+        height: auto;
+    }
+    .content{
+        margin-top: 50px;
+    }
+
+    .product-feature {
+        padding-top: 50px;
+    }
+
+    .product {
+        text-align: center;
+    }
+
+    .feature{
+        margin-top: 30px;
+    }
+
+   
+</style>
+<body>
+   
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-8 col-mx-12">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <img src="@Model.Product.ProductImages.First().ImageUrl" alt="">
+                        </div>
+                        <div class="col-md-5">
+                            <div>
+                                <h2>@Model.Product.ProductName</h2>
+                                <p class="price">@String.Format("{0:0,0}", @Model.Product.Price) VNĐ</p>
+                                <p>@Html.Raw(@Model.Product.Description.Replace("/n", "<br>"))</p>
+                                <form method="post" asp-page-handler="ProductDetails">
+                                    <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
+                                    <button type="submit" class="addtocart">Thêm vào giỏ hàng</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 col-mx-12">
+                    <div>
+                        <h5>Đặt hàng và thanh toán</h5>
+                        <p>Đặt hàng trực tuyến trên website.</p>
+                        <p>Đặt hàng qua điện thoại (zalo): 0983568361</p>
+                        <p>Thanh toán tiền mặt trực tiếp hoặc chuyển khoản</p>
+                    </div>
+
+                </div>
+            </div>
+           
+        </div>
+
+        <div class="feature">
+            <h5>Sản phẩm nổi bật</h5>
+            <div class="container">
+                <div class="product-feature">
+                    <div class="row">
+                         @foreach (var featuredProduct in Model.FeaturedProducts){
+                             <div class="col-md-3">
+                                <div class="product">
+                                    <img style="width: 250px;" src="@featuredProduct.ProductImages.First().ImageUrl" alt="">
+                                    <h5 style="color: lightseagreen; padding-top: 10px">@featuredProduct.ProductName</h5>
+                                    <p class="price">@String.Format("{0:0,0}", featuredProduct.Price) VNĐ</p>
+                                    <button class="addtocart" onclick="redirectToProductDetails(@featuredProduct.ProductId)">View</button>
+                                </div>
+                            </div>
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function redirectToProductDetails(productId) {
+        window.location.href = '/Products/ProductDetails?productId=' + productId;
+    }
+</script>
+
+</html>
