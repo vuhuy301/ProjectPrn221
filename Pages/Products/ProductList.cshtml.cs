@@ -15,10 +15,40 @@ namespace ProjectPRN221.Pages.Products
 		{
 			_context = context;
 		}
+		public int selectedId { get; set; }
+		public string PriceOrder { get; set; }
 		public IList<Product> Products { get; private set; }
-		public async Task OnGetAsync()
+		public IList<Category> categories { get; private set; }
+		public async Task OnGetAsync(int category, string priceOrder)
 		{
-			Products = await _context.Products.Include(p => p.ProductImages).ToListAsync();
+			
+			categories = await _context.Categories.ToListAsync();
+			selectedId = category;
+			PriceOrder = priceOrder;
+			var query = _context.Products.AsQueryable();
+			if (category > 0)
+			{
+				query = query.Include(p => p.ProductImages).Where(p => p.CategoryId == category);
+			}
+			else
+			{
+				query = query.Include(p => p.ProductImages);
+			}
+
+			if (priceOrder == "asc")
+			{
+				Products = await query.OrderBy(p => p.Price).ToListAsync();
+			}
+			else if (priceOrder == "desc")
+			{
+				Products = await query.OrderByDescending(p => p.Price).ToListAsync();
+			}
+			else
+			{
+				Products = await query.ToListAsync();
+			}
+
+
 		}
 	}
 }
