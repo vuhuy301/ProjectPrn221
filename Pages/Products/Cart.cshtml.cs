@@ -8,10 +8,17 @@ namespace ProjectPRN221.Pages.Products
     public class CartModel : PageModel
     {
         
+        public List<OrderItem> orderItems { get; set; }
 
         private readonly ProjectPRNContext _context;
         public List<int> ProductIds { get; private set; } = new List<int>();
-        public List<Product> Products { get; private set; } = new List<Product>();
+
+		[BindProperty]
+		public List<string> PIds { get; set; }
+
+		[BindProperty]
+		public List<int> Quantities { get; set; }
+		public List<Product> Products { get; private set; } = new List<Product>();
         public CartModel(ProjectPRNContext context)
         {
             _context = context;
@@ -39,12 +46,28 @@ namespace ProjectPRN221.Pages.Products
                 }
             }
         }
+		public IActionResult OnPost()
+		{
+			var queryString = new List<string>();
+
+			for (int i = 0; i < PIds.Count; i++)
+			{
+				var id = PIds[i];
+				var quantity = Quantities[i];
+				queryString.Add($"productIds={id}&quantities={quantity}");
+			}
+
+			var query = string.Join("&", queryString);
+			return RedirectToPage("/Products/Checkout", new { query });
+		}
 
 
-
-        private async Task<Product> GetProductById(int id)
+		private async Task<Product> GetProductById(int id)
         {
             return await _context.Products.Include(m => m.ProductImages).FirstOrDefaultAsync(p => p.ProductId == id);
         }
-    } 
+
+		
+	}
+	
 }
