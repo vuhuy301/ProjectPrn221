@@ -78,6 +78,12 @@
                                     <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
                                     <button type="submit" class="addtocart">Thêm vào giỏ hàng</button>
                                 </form>
+                                @if (TempData["Message"] != null)
+                                {
+                                    <div class="">
+                                        @TempData["Message"]
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
