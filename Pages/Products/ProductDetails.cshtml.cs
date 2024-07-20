@@ -8,7 +8,7 @@ namespace ProjectPRN221.Pages.Products
     public class ProductDetailsModel : PageModel
     {
         private readonly ProjectPRNContext _context;
-
+        public string Message { get; set; }
         [BindProperty]
         public int ProductId { get; set; }
         public ProductDetailsModel(ProjectPRNContext context)
@@ -37,19 +37,24 @@ namespace ProjectPRN221.Pages.Products
         public IActionResult OnPostProductDetails()
         {
 
-            var cart = Request.Cookies["cart"];
-            var cartItems = string.IsNullOrEmpty(cart) ? new List<int>() : new List<int>(Array.ConvertAll(cart.Split(','), int.Parse));
+			var cart = Request.Cookies["cart"];
+			var cartItems = string.IsNullOrEmpty(cart) ? new List<int>() : new List<int>(Array.ConvertAll(cart.Split(','), int.Parse));
 
+            if (cartItems.Contains(ProductId))
+            {
+                TempData["Message"] = "Sản phẩm đã có trong giỏ hàng.";
+                return RedirectToPage("/Products/ProductDetails", new { productId = ProductId });
+            }
 
             cartItems.Add(ProductId);
 
-            var options = new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(7)
-            };
-            Response.Cookies.Append("cart", string.Join(",", cartItems), options);
+			var options = new CookieOptions
+			{
+				Expires = DateTime.Now.AddDays(7)
+			};
+			Response.Cookies.Append("cart", string.Join(",", cartItems), options);
 
-            return RedirectToPage("Cart");
-        }
+			return RedirectToPage("Cart");
+		}
     }
 }

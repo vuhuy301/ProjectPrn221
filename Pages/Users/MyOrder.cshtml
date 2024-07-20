@@ -1,0 +1,43 @@
+﻿@page
+@model ProjectPRN221.Pages.Users.MyOrderModel
+@{
+}
+<div class="container">
+    <h2 style="margin-top:50px;">My Orders</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Date</th>
+                    <th>Ship To</th>
+                    <th>Order Total</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.Orders)
+                {
+                    <tr>
+                        <td>@order.OrderId</td>
+                        <td>@order.CreatedAt</td>
+                        <td>@order.ShippingAddress</td>
+                        <td>@String.Format("{0:0,0}", order.TotalAmount) VNĐ</td>
+                        <td>@order.OrderStatus</td>
+                        <td>
+                            <button onclick="redirectToOderDetails(@order.OrderId)">View Order</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function redirectToOderDetails(orderId) {
+        window.location.href = '/Users/OrderDetails?orderId=' + orderId;
+    }
+</script>

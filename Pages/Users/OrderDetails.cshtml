@@ -1,0 +1,75 @@
+﻿@page
+@model ProjectPRN221.Pages.Users.OrderDetailsModel
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #3b5d50;
+            color: white;
+            text-align: left;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        .edit-icon {
+            float: right;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="margin-top:50px;">Order Details</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>OrderId</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var orderItem in Model.orderItems)
+                {
+                    <tr>
+                        <td>
+                            <img src="@orderItem.Product.ProductImages.First().ImageUrl" alt="Analog Quartz Wristwatch" class="product-image">
+                            @orderItem.Product.ProductName<br>
+                        </td>
+                        <td>@orderItem.OrderId</td>
+                        <td>@orderItem.Quantity</td>
+                        <td>@String.Format("{0:0,0}", orderItem.UnitPrice)</td>
+                    </tr>
+                }
+               
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
