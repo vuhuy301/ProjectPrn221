@@ -1,0 +1,28 @@
+﻿@page
+@model ProjectPRN221.Pages.Categories.DeleteCategoryModel
+@{
+    ViewData["Title"] = "Delete Category";
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+
+        <form method="post">
+            <input type="hidden" asp-for="Category.CategoryId" />
+            <div class="mb-3">
+                <p>Are you sure you want to delete the category "@Model.Category.CategoryName"?</p>
+            </div>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-page="/Categories/List" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

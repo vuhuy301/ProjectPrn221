@@ -1,0 +1,46 @@
+﻿@page
+@model ProjectPRN221.Pages.Products.UpdateProductModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập Nhật Sản Phẩm</title>
+</head>
+<style>
+    /* Thêm style nếu cần */
+</style>
+<body>
+    <div class="container">
+        <h2>Cập Nhật Sản Phẩm</h2>
+        <form method="post">
+            <div class="form-group">
+                <label for="ProductName">Tên Sản Phẩm</label>
+                <input type="text" id="ProductName" name="Product.ProductName" value="@Model.Product.ProductName" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="Description">Mô Tả</label>
+                <textarea id="Description" name="Product.Description" class="form-control" rows="5">@Model.Product.Description</textarea>
+            </div>
+            <div class="form-group">
+                <label for="Price">Giá</label>
+                <input type="number" id="Price" name="Product.Price" value="@Model.Product.Price" class="form-control" step="0.01" required />
+            </div>
+            <div class="form-group">
+                <label for="Quantity">Số Lượng</label>
+                <input type="number" id="Quantity" name="Product.Quantity" value="@Model.Product.Quantity" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.CategoryId">Danh Mục</label>
+                <select asp-for="Product.CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))" class="form-control"></select>
+                <span asp-validation-for="Product.CategoryId"></span>
+            </div>
+            <input type="hidden" name="Product.ProductId" value="@Model.Product.ProductId" />
+            <button type="submit" class="btn btn-primary">Cập Nhật</button>
+        </form>
+    </div>
+</body>
+</html>

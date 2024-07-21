@@ -74,10 +74,24 @@
                                 <h2>@Model.Product.ProductName</h2>
                                 <p class="price">@String.Format("{0:0,0}", @Model.Product.Price) VNĐ</p>
                                 <p>@Html.Raw(@Model.Product.Description.Replace("/n", "<br>"))</p>
+                                @if (HttpContext.Session.GetInt32("Role") == 1)
+                                {
+                                    <form method="get" asp-page="/Products/UpdateProduct">
+                                        <input type="hidden" name="productId" value="@Model.Product.ProductId" />
+                                        <button style="background-color: aqua" type="submit" class="addtocart">Cập nhật</button>
+                                    </form>
+                                    <form method="post" asp-page-handler="Delete">
+                                        <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
+                                        <button style="background-color: red" type="submit" class="addtocart">Xóa</button>
+                                    </form>
+                                } else if (HttpContext.Session.GetInt32("Role") == 2)
+                                {
                                 <form method="post" asp-page-handler="ProductDetails">
+
                                     <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
                                     <button type="submit" class="addtocart">Thêm vào giỏ hàng</button>
                                 </form>
+                                }
                                 @if (TempData["Message"] != null)
                                 {
                                     <div class="">
@@ -97,7 +111,7 @@
                         <p>Thanh toán tiền mặt trực tiếp hoặc chuyển khoản</p>
                     </div>
 
-                </div>
+                </div>                                  
             </div>
            
         </div>

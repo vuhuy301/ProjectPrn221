@@ -56,5 +56,27 @@ namespace ProjectPRN221.Pages.Products
 
 			return RedirectToPage("Cart");
 		}
+        public async Task<IActionResult> OnPostDeleteAsync(int productId)
+        {
+            var product = await _context.Products
+                .Include(p => p.ProductImages)
+                .FirstOrDefaultAsync(p => p.ProductId == productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var orderItems = _context.OrderItems.Where(oi => oi.ProductId == productId);
+            _context.OrderItems.RemoveRange(orderItems);
+            var images = _context.ProductImages.Where(i => i.ProductId == productId);
+            _context.ProductImages.RemoveRange(images);
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Sản phẩm đã được xóa thành công.";
+            return RedirectToPage("/Products/ProductList");
+        }
+
     }
 }

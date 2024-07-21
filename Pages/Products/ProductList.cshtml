@@ -15,6 +15,18 @@
 		border-radius: 15px;
 		padding: 5px;
 	}
+
+	.alert {
+		padding: 15px;
+		margin-bottom: 20px;
+		border: 1px solid transparent;
+		border-radius: 4px;
+	}
+
+	.alert-success {
+		color: #a94442; /* Red text color */
+		border-color: #ebccd1; /* Border color matching the light red background */
+	}
 </style>
 
 
@@ -43,6 +55,29 @@
 
 	<div class="untree_co-section product-section before-footer-section">
 		<div class="container">
+			@if (HttpContext.Session.GetInt32("Role") == 1)
+			{
+				<div class="admin-buttons">
+					<button style="background-color: red; color: white; border: none; border-radius: 5px; height: 40px; width: 160px;"
+							onclick="redirectToAddProduct()">
+						Add new product
+					</button>
+					<button style="background-color: red; color: white; border: none; border-radius: 5px; height: 40px; width: 160px;"
+							onclick="redirectToCategory()">
+						Category
+					</button>
+				</div>
+			}
+			<div class="container">
+				<h1>@ViewData["Title"]</h1>
+
+				@if (TempData["SuccessMessage"] != null)
+				{
+					<div class="alert alert-success">
+						@TempData["SuccessMessage"]
+					</div>
+				}
+			</div>
 			<div class="content1">
 				<select class="category" name="" id="category" onchange="filterProducts()">
 					<option value="0" >All</option>
@@ -51,7 +86,6 @@
 						var isSelected = category.CategoryId == Model.selectedId ? "selected" : "";
 						<option value="@category.CategoryId">@category.CategoryName</option>
 					}
-					
 				</select>
 				<select class="category" name="priceOrder" id="priceOrder" onchange="filterProducts()">
 					<option value="">Sort by Price</option>
@@ -102,6 +136,12 @@
 <script>
 	function redirectToProductDetails(productId) {
 		window.location.href = '/Products/ProductDetails?productId=' + productId;
+	}
+	function redirectToAddProduct() {
+		window.location.href = '/Products/AddProduct';
+	}
+	function redirectToCategory() {
+		window.location.href = '/Products/Category';
 	}
 	function filterProducts() {
 		var category = document.getElementById("category").value;

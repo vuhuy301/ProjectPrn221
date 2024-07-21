@@ -1,0 +1,87 @@
+﻿@page
+@model ProjectPRN221.Pages.Products.AddProductModel
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <style>
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 60%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add New Product</h1>
+        <form method="post">
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+                <input type="text" id="productName" name="ProductName" required />
+            </div>
+            <div class="form-group">
+                <label for="productDescription">Description</label>
+                <textarea id="productDescription" name="Description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="productPrice">Price (VNĐ)</label>
+                <input type="number" id="productPrice" name="Price" required />
+            </div>
+            <div class="form-group">
+                <label for="productQuantity">Quantity</label>
+                <input type="number" id="productQuantity" name="Quantity" required />
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select style="width: 30%; padding: 10px;" class="category" name="CategoryId" id="category">
+                    @foreach (var category in Model.categories)
+                    {
+                        <option value="@category.CategoryId">@category.CategoryName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="productImageUrl">Image URL</label>
+                <input type="text" id="productImageUrl" name="ImageUrl" required />
+            </div>
+            <button type="submit">Add Product</button>
+        </form>
+    </div>
+</body>
+</html>

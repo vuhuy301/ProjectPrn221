@@ -31,12 +31,17 @@
 					<li><a class="nav-link" asp-area="" asp-page="/Products/Cart">Cart</a></li>
 					@if (Context.Session.GetString("Username") != null)
 					{
-						<li><a class="nav-link" asp-area="" asp-page="">Profile</a></li>
-						<li><a class="nav-link" asp-area="" asp-page="/Users/MyOrder">My Order</a></li>
+						if (Context.Session.GetInt32("Role") == 1)
+						{
+							<li><a class="nav-link" asp-area="" asp-page="">Profile</a></li>
+							<li><a class="nav-link" asp-area="" asp-page="/Users/MyOrder">My Order</a></li>
+						}
 					}
-					else{
+					else
+					{
 						<li><a class="nav-link" asp-area="" asp-page="/Users/Login">Login</a></li>
 					}
+
 					
 				</ul>
 
