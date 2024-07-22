@@ -4,6 +4,38 @@
     ViewData["Title"] = "Edit";
 }
 
+<style>
+    /* Áp dụng cho bảng */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    /* Áp dụng cho hàng tiêu đề */
+    thead th {
+        background-color: #ffcccb; /* Màu hồng nhạt */
+        text-align: left;
+        padding: 10px;
+        font-weight: bold; /* In đậm */
+        color: #333; /* Màu chữ đậm */
+    }
+
+    /* Áp dụng cho hàng dữ liệu */
+    tbody td {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        font-family: Arial, sans-serif; /* Chọn font chữ */
+        color: #555; /* Màu chữ nhạt */
+    }
+
+    /* Hiệu ứng hover cho hàng dữ liệu */
+    tbody tr:hover {
+        background-color: #f0e68c; /* Màu vàng nhạt */
+        transition: background-color 0.3s ease; /* Hiệu ứng mượt mà */
+        color: #000; /* Màu chữ đậm khi hover */
+    }
+
+</style>
 <h1>Edit</h1>
 
 <h4>Product</h4>
@@ -15,24 +47,31 @@
             <input type="hidden" asp-for="Order.OrderId" />
             <div class="form-group">
                 <label asp-for="Order.Name" class="control-label"></label>
-                <input asp-for="Order.Name" class="form-control" />
+                <input asp-for="Order.Name" class="form-control" readonly/>
                 <span asp-validation-for="Order.Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Order.Phone" class="control-label"></label>
-                <input asp-for="Order.Phone" class="form-control" />
+                <input asp-for="Order.Phone" class="form-control" readonly/>
                 <span asp-validation-for="Order.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Order.TotalAmount" class="control-label"></label>
-                <input asp-for="Order.TotalAmount" class="form-control" />
+                <input asp-for="Order.TotalAmount" class="form-control" readonly/>
                 <span asp-validation-for="Order.TotalAmount" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Order.OrderStatus" class="control-label"></label>
-                <input asp-for="Order.OrderStatus" class="form-control" />
+                <select asp-for="Order.OrderStatus" class="form-control">
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Pending">Pending</option>
+                </select>
                 <span asp-validation-for="Order.OrderStatus" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

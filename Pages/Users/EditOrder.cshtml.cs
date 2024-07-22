@@ -31,7 +31,6 @@ namespace ProjectPRN221.Pages.Users
                 return NotFound();
             }
             Order = order;
-            /*ViewData["StaffId"] = new SelectList(_context.Staffs, "StaffId", "StaffId");*/
             return Page();
         }
 
@@ -39,7 +38,7 @@ namespace ProjectPRN221.Pages.Users
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
