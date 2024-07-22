@@ -4,7 +4,121 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
+<div class="banner">
+    <div class="slider">
+        <img src="https://www.tooplate.com/templates/2133_moso_interior/images/living-room-interior-wall-mockup-warm-tones-with-leather-sofa-which-is-kitchen-3d-rendering.jpg" alt="Banner Image"/>
+        <!-- Thêm các hình ảnh khác vào đây -->
+    </div>
+    <div class="banner-text">
+        <h2>Welcome to Furni!</h2>
+        <p>Discover our latest furniture collections.</p>
+        <a href="/Products/ProductList" class="btn btn-primary">Shop Now</a>
+    </div>
 </div>
+
+<style>
+	.content1 {
+		margin-bottom: 40px;
+	}
+
+	.category {
+		width: 200px;
+		height: 30px;
+		border-radius: 15px;
+		padding: 5px;
+	}
+</style>
+
+<body>
+
+
+	<div class="untree_co-section product-section before-footer-section">
+		<div class="container">
+			<div class="content1">
+				<select class="category" name="" id="category" onchange="filterProducts()">
+					<option value="0">All</option>
+					@foreach (var category in Model.categories)
+					{
+						var isSelected = category.CategoryId == Model.selectedId ? "selected" : "";
+						<option value="@category.CategoryId">@category.CategoryName</option>
+					}
+
+				</select>
+				<select class="category" name="priceOrder" id="priceOrder" onchange="filterProducts()">
+					<option value="">Sort by Price</option>
+					<option value="asc">Price: Từ thấp đến cao</option>
+					<option value="desc">Price: Từ cao đến thấp</option>
+				</select>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+
+				<!-- Start Column 1 -->
+				@foreach (var product in Model.Products)
+				{
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" href="#">
+							@if (product.ProductImages != null && product.ProductImages.Count > 0)
+							{
+								<img src="@product.ProductImages.First().ImageUrl" class="img-fluid product-thumbnail">
+							}
+							else
+							{
+								<img src="default-image-url.png" class="img-fluid product-thumbnail">
+							}
+							<h3 class="product-title">@product.ProductName</h3>
+							<strong class="product-price">@String.Format("{0:0,0}", @product.Price) VNĐ</strong>
+							<span class="icon-cross" onclick="redirectToProductDetails(@product.ProductId)">
+								<i style="color:aliceblue" class="fa-regular fa-eye"></i>
+							</span>
+						</a>
+					</div>
+				}
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Start Footer Section -->
+	<!-- End Footer Section -->
+
+
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<script src="js/tiny-slider.js"></script>
+	<script src="js/custom.js"></script>
+</body>
+<script>
+	function redirectToProductDetails(productId) {
+		window.location.href = '/Products/ProductDetails?productId=' + productId;
+	}
+	function filterProducts() {
+		var category = document.getElementById("category").value;
+		var priceOrder = document.getElementById("priceOrder").value;
+		var queryString = `?category=${category}&priceOrder=${priceOrder}`;
+		window.location.href = queryString;
+	}
+
+	window.onload = function () {
+		var selectedCategory = '@Model.selectedId';
+		var categorySelect = document.getElementById("category");
+
+		// Duyệt qua các option để tìm option tương ứng
+		for (var i = 0; i < categorySelect.options.length; i++) {
+			if (categorySelect.options[i].value === selectedCategory) {
+				categorySelect.selectedIndex = i;
+				break;
+			}
+		}
+	}
+</script>
+
+
+
+
+    
+
+
+    

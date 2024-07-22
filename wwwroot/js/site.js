@@ -2,3 +2,13 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+<script>
+    const slider = tns({
+        container: '.slider',
+    items: 1,
+    slideBy: 'page',
+    autoplay: true,
+    controls: false,
+    nav: false
+    });
+</script>
